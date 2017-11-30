@@ -1,0 +1,23 @@
+package: github.com/burnsy/wacky-races
+import:
+- package: github.com/go-kit/kit
+  version: ^0.6.0
+  subpackages:
+  - endpoint
+  - log
+  - sd
+  - sd/consul
+  - sd/lb
+  - transport/http
+- package: github.com/gorilla/mux
+  version: ^1.6.0
+- package: github.com/hashicorp/consul
+  version: ^1.0.1
+  subpackages:
+  - api
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: gopkg.in/mgo.v2
+  subpackages:
+  - bson
