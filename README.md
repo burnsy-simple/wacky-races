@@ -10,7 +10,7 @@ A competitor competes in only one type/category of race
 i.e. Thoroughbreds do not compete in Harness races
 
 ## API
-GET /races?num_races=3         retrieve next N races; 5 by default
+GET /races?num_races=3         retrieve next N races; 5 by default  
 GET /race/:id                  itretrieve a particular race
 
 ## Instructions
