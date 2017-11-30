@@ -13,6 +13,13 @@ i.e. Thoroughbreds do not compete in Harness races
 GET /races?num_races=3         retrieve next N races; 5 by default
 GET /race/:id                  itretrieve a particular race
 
+## Instructions
+cd wacky-races
+glide install
+cd cmd\raceService
+go build
+./raceService.exe
+
 Possible improvements:
  - unit tests
  - use web sockets to push race updates to the index page. Too late now..
