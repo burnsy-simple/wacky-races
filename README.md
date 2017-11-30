@@ -20,6 +20,8 @@ cd cmd\raceService
 go build
 ./raceService.exe
 
+This service has been built and tested with go 1.9.2 on 64-bit Windows
+
 Possible improvements:
  - unit tests
  - use web sockets to push race updates to the index page. Too late now..
