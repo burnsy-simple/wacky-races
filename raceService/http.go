@@ -35,9 +35,6 @@ func MakeHTTPHandler(ctx context.Context, svc Service, logger log.Logger) http.H
 		httptransport.ServerErrorEncoder(encodeError),
 	}
 
-	// GET /races/         retrieve next N races
-	// GET /races/:id      retrieve a particular race
-
 	r.Methods("GET").Path("/races").Handler(httptransport.NewServer(
 		e.GetRacesEndpoint,
 		decodeGetRacesRequest,

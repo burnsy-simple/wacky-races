@@ -71,7 +71,6 @@ func (e Endpoints) GetRaceDetails(ctx context.Context, raceID string) (*models.R
 }
 
 // MakeGetRacesEndpoint returns an endpoint via the passed service.
-// Primarily useful in a server.
 func MakeGetRacesEndpoint(svc Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(payloads.RacesReq)
