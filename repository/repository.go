@@ -12,7 +12,7 @@ import (
 type RaceRepository interface {
 	// GetNextNRaces returns the next N races
 	GetNextNRaces(ctx context.Context, numRaces int) (models.Races, error)
-	// GetNextNRaces returns the next N races
+	// GetRaceDetails returns the race details
 	GetRaceDetails(ctx context.Context, id string) (*models.RaceDetails, error)
 }
 

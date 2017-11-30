@@ -10,6 +10,8 @@ import (
 	"github.com/burnsy/wacky-races/models"
 )
 
+const defaultNumRaces = 5
+
 // Service is a simple Fetcher interface for horse/greyhound races.
 type Service interface {
 	GetNextRaces(ctx context.Context, num int) (models.Races, error)
@@ -17,8 +19,7 @@ type Service interface {
 }
 
 var (
-	ErrNotFound = errors.New("not found")
-	ErrBadData  = errors.New("Malformed data")
+	ErrBadData = errors.New("Malformed data")
 )
 
 type nextNService struct {
@@ -26,17 +27,26 @@ type nextNService struct {
 	logger         log.Logger
 }
 
-func NewNExtNService(repository repository.RaceRepository, logger log.Logger) Service {
+func NewNextNService(repository repository.RaceRepository, logger log.Logger) Service {
 	return &nextNService{
 		RaceRepository: repository,
 		logger:         logger,
 	}
 }
 
-func (s *nextNService) GetNextRaces(ctx context.Context, numRaces int) (models.Races, error) {
-	return models.Races{}, nil
+func (svc *nextNService) GetNextRaces(ctx context.Context, numRaces int) (models.Races, error) {
+	if numRaces < 0 {
+		return nil, ErrBadData
+	} else if numRaces == 0 {
+		numRaces = defaultNumRaces
+	}
+	return svc.RaceRepository.GetNextNRaces(ctx, numRaces)
 }
 
-func (s *nextNService) GetRaceDetails(ctx context.Context, raceID string) (*models.RaceDetails, error) {
-	return &models.RaceDetails{}, ErrNotFound
+func (svc *nextNService) GetRaceDetails(ctx context.Context, raceID string) (*models.RaceDetails, error) {
+	if len(raceID) == 0 {
+		return nil, ErrBadData
+	}
+
+	return svc.RaceRepository.GetRaceDetails(ctx, raceID)
 }

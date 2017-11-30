@@ -2,7 +2,9 @@
 // to interact with it given current limited understanding.
 package models
 
-import "time"
+import (
+	"time"
+)
 
 // Race represents a single race of any type.
 // ID should be globally unique.
@@ -17,9 +19,20 @@ type Race struct {
 
 type Races []*Race
 
+// Implementation of sort.Interface
+func (races Races) Len() int {
+	return len(races)
+}
+func (races Races) Swap(i, j int) {
+	races[i], races[j] = races[j], races[i]
+}
+func (races Races) Less(i, j int) bool {
+	return races[i].CloseAt.Before(races[j].CloseAt)
+}
+
 // RaceDetails represents a single race of any type.
 type RaceDetails struct {
-	Race
+	*Race
 	// Additional race specific details can go here
 	Competitors []Competitor
 }

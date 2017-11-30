@@ -12,6 +12,7 @@ import (
 
 	"golang.org/x/net/context"
 
+	"github.com/burnsy/wacky-races/common"
 	"github.com/burnsy/wacky-races/payloads"
 	"github.com/gorilla/mux"
 
@@ -37,7 +38,7 @@ func MakeHTTPHandler(ctx context.Context, svc Service, logger log.Logger) http.H
 	// GET /races/         retrieve next N races
 	// GET /races/:id      retrieve a particular race
 
-	r.Methods("GET").Path("/races/").Handler(httptransport.NewServer(
+	r.Methods("GET").Path("/races").Handler(httptransport.NewServer(
 		e.GetRacesEndpoint,
 		decodeGetRacesRequest,
 		encodeResponse,
@@ -53,13 +54,13 @@ func MakeHTTPHandler(ctx context.Context, svc Service, logger log.Logger) http.H
 }
 
 func decodeGetRacesRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
-	vars := mux.Vars(r)
+	vars := r.URL.Query()
 	races, ok := vars["num_races"]
 	numRaces := 0
 	if !ok {
 		numRaces = 5
 	} else {
-		numRaces, err = strconv.Atoi(races)
+		numRaces, err = strconv.Atoi(races[0])
 		if err != nil {
 			return payloads.RacesReq{}, ErrBadData
 		}
@@ -143,7 +144,7 @@ func encodeError(_ context.Context, err error, w http.ResponseWriter) {
 
 func codeFrom(err error) int {
 	switch err {
-	case ErrNotFound:
+	case common.ErrNotFound:
 		return http.StatusNotFound
 	case ErrBadData:
 		return http.StatusBadRequest

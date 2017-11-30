@@ -37,7 +37,7 @@ func main() {
 
 	var svc raceService.Service
 	{
-		svc = raceService.NewNExtNService(repo, logger)
+		svc = raceService.NewNextNService(repo, logger)
 		svc = middleware.LoggingMiddleware(logger)(svc)
 	}
 
