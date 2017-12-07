@@ -35,6 +35,7 @@ func MakeHTTPHandler(ctx context.Context, svc Service, logger log.Logger) http.H
 		httptransport.ServerErrorEncoder(encodeError),
 	}
 
+	r.Methods("OPTIONS").Path("/races").HandlerFunc(preFlightHandler)
 	r.Methods("GET").Path("/races").Handler(httptransport.NewServer(
 		e.GetRacesEndpoint,
 		decodeGetRacesRequest,
@@ -48,6 +49,16 @@ func MakeHTTPHandler(ctx context.Context, svc Service, logger log.Logger) http.H
 		options...,
 	))
 	return r
+}
+
+func preFlightHandler(w http.ResponseWriter, r *http.Request) {
+	// REVISIT: Workaround for CORS when running locally
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Access-Control-Allow-Origin", "http://lvh.me:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Access-Control-Allow-Headers", "content-type,accept")
+	w.WriteHeader(http.StatusOK)
 }
 
 func decodeGetRacesRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
@@ -109,6 +120,9 @@ func encodeResponse(ctx context.Context, w http.ResponseWriter, response interfa
 		return nil
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
+	// Work-around for CORS when running locally
+	w.Header().Set("Access-Control-Allow-Origin", "http://lvh.me:3000")
 	return json.NewEncoder(w).Encode(response)
 }
 

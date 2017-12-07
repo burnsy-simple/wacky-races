@@ -16,8 +16,8 @@ type RacesReq struct {
 // RacesResp represents a single race of any type.
 // ID should be globally unique.
 type RacesResp struct {
-	models.Races
-	Err error
+	models.Races `json:"races"`
+	Err          error `json:"err"`
 }
 
 func (r RacesResp) error() error { return r.Err }
@@ -28,8 +28,8 @@ type RaceDetailsReq struct {
 
 // RaceDetailsResp represents a single race of any type.
 type RaceDetailsResp struct {
-	*models.RaceDetails
-	Err error
+	*models.RaceDetails `json:"race_details"`
+	Err                 error `json:"err"`
 }
 
 func (r RaceDetailsResp) error() error { return r.Err }
