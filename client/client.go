@@ -6,7 +6,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/burnsy/raceService"
+	"github.com/burnsy/wacky-races/raceService"
 	consulapi "github.com/hashicorp/consul/api"
 
 	"github.com/go-kit/kit/endpoint"
