@@ -1,4 +1,4 @@
-package raceService
+package raceservice
 
 import (
 	"context"
@@ -49,6 +49,24 @@ func MakeClientEndpoints(instance string) (Endpoints, error) {
 }
 
 // GetRaces retrieves the next N races that will be run
+// swagger:route GET /races Races listRaces
+//
+// Lists the next N races.
+//
+// This will show the next 5 races by default.
+//
+//     Consumes:
+//     - application/json
+//
+//     Produces:
+//     - application/json
+//
+//     Schemes: http, https
+//
+//     Responses:
+//       default: genericError
+//       200: racesResponse
+//       422: validationError
 func (e Endpoints) GetRaces(ctx context.Context, numRaces int) (models.Races, error) {
 	request := payloads.RacesReq{NumRaces: numRaces}
 	response, err := e.GetRacesEndpoint(ctx, request)

@@ -8,16 +8,25 @@ import (
 
 // Race represents a single race of any type.
 // ID should be globally unique.
+// swagger:model
 type Race struct {
-	ID       string       `json:"id"`
-	MeetID   string       `json:"meet_id"`
+	// required: true
+	ID string `json:"id"`
+	// required: true
+	MeetID string `json:"meet_id"`
+	// required: true
 	Category RaceCategory `json:"type"`
-	Name     string       `json:"name"`
-	StartAt  time.Time    `json:"start_at"`
-	CloseAt  time.Time    `json:"close_at"`
+	// required: true
+	Name string `json:"name"`
+	// required: true
+	StartAt time.Time `json:"start_at"`
+	// required: true
+	CloseAt time.Time `json:"close_at"`
 }
 
-type Races []*Race
+// Races dscribes a bunch of races
+// swagger:model
+type Races []Race
 
 // Implementation of sort.Interface
 func (races Races) Len() int {
@@ -31,7 +40,9 @@ func (races Races) Less(i, j int) bool {
 }
 
 // RaceDetails represents a single race of any type.
+// swagger:model
 type RaceDetails struct {
+	// required: true
 	*Race
 	// Additional race specific details can go here
 	Competitors []Competitor

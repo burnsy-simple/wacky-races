@@ -74,27 +74,27 @@ func init() {
 
 	competitorIndex := 0
 	thoroughbredRaces = models.Races{
-		newThoroughbredRace(doombenMeet.ID, "Jake Brown Handicap", &nextThoroughbredStartTime, &competitorIndex),
-		newThoroughbredRace(doombenMeet.ID, "Gold Handicap", &nextThoroughbredStartTime, &competitorIndex),
-		newThoroughbredRace(doombenMeet.ID, "Smalls Handicap", &nextThoroughbredStartTime, &competitorIndex),
-		newThoroughbredRace(doombenMeet.ID, "Bloom Handicap", &nextThoroughbredStartTime, &competitorIndex),
-		newThoroughbredRace(doombenMeet.ID, "Ulysees Handicap", &nextThoroughbredStartTime, &competitorIndex),
+		*newThoroughbredRace(doombenMeet.ID, "Jake Brown Handicap", &nextThoroughbredStartTime, &competitorIndex),
+		*newThoroughbredRace(doombenMeet.ID, "Gold Handicap", &nextThoroughbredStartTime, &competitorIndex),
+		*newThoroughbredRace(doombenMeet.ID, "Smalls Handicap", &nextThoroughbredStartTime, &competitorIndex),
+		*newThoroughbredRace(doombenMeet.ID, "Bloom Handicap", &nextThoroughbredStartTime, &competitorIndex),
+		*newThoroughbredRace(doombenMeet.ID, "Ulysees Handicap", &nextThoroughbredStartTime, &competitorIndex),
 	}
 
 	competitorIndex = 0
 	harnessRaces = models.Races{
-		newHarnessRace(goldMeet.ID, "Bladerunner Memorial", &nextHarnessStartTime, &competitorIndex),
-		newHarnessRace(goldMeet.ID, "Doolittle Do", &nextHarnessStartTime, &competitorIndex),
-		newHarnessRace(goldMeet.ID, "Race 3", &nextHarnessStartTime, &competitorIndex),
-		newHarnessRace(goldMeet.ID, "Race 4", &nextHarnessStartTime, &competitorIndex),
+		*newHarnessRace(goldMeet.ID, "Bladerunner Memorial", &nextHarnessStartTime, &competitorIndex),
+		*newHarnessRace(goldMeet.ID, "Doolittle Do", &nextHarnessStartTime, &competitorIndex),
+		*newHarnessRace(goldMeet.ID, "Race 3", &nextHarnessStartTime, &competitorIndex),
+		*newHarnessRace(goldMeet.ID, "Race 4", &nextHarnessStartTime, &competitorIndex),
 	}
 
 	competitorIndex = 0
 	greyhoundRaces = models.Races{
-		newGreyhoundRace(sunshineMeet.ID, "Race 1", &nextGreyhoundStartTime, &competitorIndex),
-		newGreyhoundRace(sunshineMeet.ID, "Race 2", &nextGreyhoundStartTime, &competitorIndex),
-		newGreyhoundRace(sunshineMeet.ID, "Race 3", &nextGreyhoundStartTime, &competitorIndex),
-		newGreyhoundRace(sunshineMeet.ID, "Race 4", &nextGreyhoundStartTime, &competitorIndex),
+		*newGreyhoundRace(sunshineMeet.ID, "Race 1", &nextGreyhoundStartTime, &competitorIndex),
+		*newGreyhoundRace(sunshineMeet.ID, "Race 2", &nextGreyhoundStartTime, &competitorIndex),
+		*newGreyhoundRace(sunshineMeet.ID, "Race 3", &nextGreyhoundStartTime, &competitorIndex),
+		*newGreyhoundRace(sunshineMeet.ID, "Race 4", &nextGreyhoundStartTime, &competitorIndex),
 	}
 
 	allRaces = make(models.Races, 0, len(thoroughbredRaces)+len(harnessRaces)+len(greyhoundRaces))

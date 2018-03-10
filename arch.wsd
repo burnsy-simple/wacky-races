@@ -1,0 +1,11 @@
+@startuml wacky-races
+actor Sean
+actor Dylan
+actor Steve
+actor Jaiyeon
+Dylan -- (big poo)
+Steve -- (wee wee)
+bob -> alice: syn
+bob <- alice: syn ack
+bob -> alice: ack
+@enduml

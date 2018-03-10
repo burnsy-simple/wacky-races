@@ -1,0 +1,37 @@
+{
+  "swagger": "2.0",
+  "info": {},
+  "paths": {
+    "/races": {
+      "get": {
+        "description": "This will show the next 5 races by default.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "http",
+          "https"
+        ],
+        "tags": [
+          "races"
+        ],
+        "summary": "Lists the next N races.",
+        "operationId": "listRaces",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/racesResponse"
+          },
+          "422": {
+            "$ref": "#/responses/validationError"
+          },
+          "default": {
+            "$ref": "#/responses/genericError"
+          }
+        }
+      }
+    }
+  }
+}

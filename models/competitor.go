@@ -14,7 +14,9 @@ type RaceCategory int8
 // Competitor competes in a race
 // ID should be unique within the race (at a minimum).
 // Assumption: A competitor only competes in one type/category of race
+// swagger:model
 type Competitor struct {
+	// required: true
 	ID       string       `json:"id"`
 	Name     string       `json:"name,omitempty"`
 	Position int8         `json:"position"`
@@ -31,14 +33,17 @@ func NewCompetitor(id, name string, category RaceCategory) *Competitor {
 	}
 }
 
+// NewThoroughbred creates a thoroughbred
 func NewThoroughbred(id, name string) *Competitor {
 	return NewCompetitor(id, name, Thoroughbred)
 }
 
+// NewGreyhound creates a thoroughbred
 func NewGreyhound(id, name string) *Competitor {
 	return NewCompetitor(id, name, Greyhound)
 }
 
+// NewHarness creates a thoroughbred
 func NewHarness(id, name string) *Competitor {
 	return NewCompetitor(id, name, Harness)
 }

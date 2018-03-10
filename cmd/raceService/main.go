@@ -12,7 +12,7 @@ import (
 
 	"github.com/burnsy/wacky-races/common"
 	"github.com/burnsy/wacky-races/middleware"
-	"github.com/burnsy/wacky-races/raceService"
+	"github.com/burnsy/wacky-races/raceservice"
 	"github.com/burnsy/wacky-races/repository"
 	"github.com/go-kit/kit/log"
 )
@@ -35,9 +35,9 @@ func main() {
 		repo = repository.NewRaceRepository(log.With(logger, "component", common.RepositoryKey))
 	}
 
-	var svc raceService.Service
+	var svc raceservice.Service
 	{
-		svc = raceService.NewNextNService(repo, logger)
+		svc = raceservice.NewNextNService(repo, logger)
 		svc = middleware.LoggingMiddleware(logger)(svc)
 	}
 
@@ -49,7 +49,7 @@ func main() {
 
 	var h http.Handler
 	{
-		h = raceService.MakeHTTPHandler(ctx, svc, log.With(logger, "component", "HTTP"))
+		h = raceservice.MakeHTTPHandler(ctx, svc, log.With(logger, "component", "HTTP"))
 	}
 
 	errs := make(chan error)

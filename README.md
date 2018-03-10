@@ -1,4 +1,4 @@
-# raceService
+# raceservice
 
 By default this service will retrieve the next 5 races and provide details for each of the
 races on demand.
@@ -16,9 +16,9 @@ GET /race/:id                  itretrieve a particular race
 ## Instructions
 cd wacky-races  
 glide install  
-cd cmd\raceService  
+cd cmd\raceservice  
 go build  
-./raceService.exe
+./raceservice.exe
 
 This service has been built and tested with go 1.9.2 on 64-bit Windows
 

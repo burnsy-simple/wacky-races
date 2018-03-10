@@ -1,4 +1,4 @@
-package raceService
+package raceservice
 
 import (
 	"bytes"
