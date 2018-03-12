@@ -5,15 +5,15 @@ import (
 	"time"
 
 	"github.com/burnsy/wacky-races/models"
-	"github.com/burnsy/wacky-races/raceservice"
+	"github.com/burnsy/wacky-races/service"
 	"github.com/go-kit/kit/log"
 )
 
 // Middleware is effectively a request level decorator
-type Middleware func(raceservice.Service) raceservice.Service
+type Middleware func(service.Service) service.Service
 
 func LoggingMiddleware(logger log.Logger) Middleware {
-	return func(next raceservice.Service) raceservice.Service {
+	return func(next service.Service) service.Service {
 		return &loggingMiddleware{
 			next:   next,
 			logger: logger,
@@ -22,7 +22,7 @@ func LoggingMiddleware(logger log.Logger) Middleware {
 }
 
 type loggingMiddleware struct {
-	next   raceservice.Service
+	next   service.Service
 	logger log.Logger
 }
 

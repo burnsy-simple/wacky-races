@@ -5,18 +5,13 @@ import (
 	"errors"
 
 	"github.com/burnsy/wacky-races/repository"
+	"github.com/burnsy/wacky-races/service"
 	"github.com/go-kit/kit/log"
 
 	"github.com/burnsy/wacky-races/models"
 )
 
 const defaultNumRaces = 5
-
-// Service is a simple Fetcher interface for horse/greyhound races.
-type Service interface {
-	GetNextRaces(ctx context.Context, num int) (models.Races, error)
-	GetRaceDetails(ctx context.Context, raceID string) (*models.RaceDetails, error)
-}
 
 var (
 	ErrBadData = errors.New("Malformed data")
@@ -27,7 +22,7 @@ type nextNService struct {
 	logger         log.Logger
 }
 
-func NewNextNService(repository repository.RaceRepository, logger log.Logger) Service {
+func NewNextNService(repository repository.RaceRepository, logger log.Logger) service.Service {
 	return &nextNService{
 		RaceRepository: repository,
 		logger:         logger,

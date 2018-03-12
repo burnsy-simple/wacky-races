@@ -14,6 +14,7 @@ import (
 
 	"github.com/burnsy/wacky-races/common"
 	"github.com/burnsy/wacky-races/payloads"
+	"github.com/burnsy/wacky-races/service"
 	"github.com/gorilla/mux"
 
 	"github.com/go-kit/kit/log"
@@ -27,7 +28,7 @@ var (
 )
 
 // MakeHTTPHandler mounts all of the service endpoints into an http.Handler.
-func MakeHTTPHandler(ctx context.Context, svc Service, logger log.Logger) http.Handler {
+func MakeHTTPHandler(ctx context.Context, svc service.Service, logger log.Logger) http.Handler {
 	r := mux.NewRouter()
 	e := MakeServerEndpoints(svc)
 	options := []httptransport.ServerOption{

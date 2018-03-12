@@ -7,6 +7,7 @@ import (
 
 	"github.com/burnsy/wacky-races/models"
 	"github.com/burnsy/wacky-races/payloads"
+	"github.com/burnsy/wacky-races/service"
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
 )
@@ -20,7 +21,7 @@ type Endpoints struct {
 
 // MakeServerEndpoints returns an Endpoints struct where each endpoint invokes
 // the corresponding method on the provided service.
-func MakeServerEndpoints(s Service) Endpoints {
+func MakeServerEndpoints(s service.Service) Endpoints {
 	return Endpoints{
 		GetRacesEndpoint: MakeGetRacesEndpoint(s),
 		GetRaceEndpoint:  MakeGetRaceEndpoint(s),
@@ -89,7 +90,7 @@ func (e Endpoints) GetRaceDetails(ctx context.Context, raceID string) (*models.R
 }
 
 // MakeGetRacesEndpoint returns an endpoint via the passed service.
-func MakeGetRacesEndpoint(svc Service) endpoint.Endpoint {
+func MakeGetRacesEndpoint(svc service.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(payloads.RacesReq)
 		races, err := svc.GetNextRaces(ctx, req.NumRaces)
@@ -98,7 +99,7 @@ func MakeGetRacesEndpoint(svc Service) endpoint.Endpoint {
 }
 
 // MakeGetRaceEndpoint returns an endpoint via the passed service.
-func MakeGetRaceEndpoint(svc Service) endpoint.Endpoint {
+func MakeGetRaceEndpoint(svc service.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(payloads.RaceDetailsReq)
 		race, err := svc.GetRaceDetails(ctx, req.RaceID)

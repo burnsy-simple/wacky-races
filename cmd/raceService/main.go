@@ -14,6 +14,7 @@ import (
 	"github.com/burnsy/wacky-races/middleware"
 	"github.com/burnsy/wacky-races/raceservice"
 	"github.com/burnsy/wacky-races/repository"
+	"github.com/burnsy/wacky-races/service"
 	"github.com/go-kit/kit/log"
 )
 
@@ -35,7 +36,7 @@ func main() {
 		repo = repository.NewRaceRepository(log.With(logger, "component", common.RepositoryKey))
 	}
 
-	var svc raceservice.Service
+	var svc service.Service
 	{
 		svc = raceservice.NewNextNService(repo, logger)
 		svc = middleware.LoggingMiddleware(logger)(svc)
