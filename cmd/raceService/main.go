@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"golang.org/x/net/context"
+	"context"
 
 	"github.com/burnsy/wacky-races/common"
 	"github.com/burnsy/wacky-races/middleware"

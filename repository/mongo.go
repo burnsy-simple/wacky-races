@@ -9,9 +9,9 @@ import (
 	"sort"
 	"time"
 
+	"context"
 	"github.com/burnsy/wacky-races/common"
 	"github.com/burnsy/wacky-races/models"
-	"golang.org/x/net/context"
 )
 
 func (mr mongoRepository) GetNextNRaces(ctx context.Context, numRaces int) (models.Races, error) {

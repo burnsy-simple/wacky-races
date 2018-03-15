@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"golang.org/x/net/context"
+	"context"
 
 	"github.com/burnsy/wacky-races/common"
 	"github.com/burnsy/wacky-races/payloads"
