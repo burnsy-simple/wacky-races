@@ -22,6 +22,7 @@ type mongoRepository struct {
 	Logger log.Logger
 }
 
+// NewRaceRepository creates a new repository
 func NewRaceRepository(logger log.Logger) RaceRepository {
 	return &mongoRepository{
 		Logger: logger,

@@ -12,6 +12,7 @@ import (
 // Middleware is effectively a request level decorator
 type Middleware func(service.Service) service.Service
 
+// LoggingMiddleware creates the logging middleware
 func LoggingMiddleware(logger log.Logger) Middleware {
 	return func(next service.Service) service.Service {
 		return &loggingMiddleware{

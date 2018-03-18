@@ -14,6 +14,7 @@ import (
 const defaultNumRaces = 5
 
 var (
+	// ErrBadData is a generic error returned to this service's clients
 	ErrBadData = errors.New("Malformed data")
 )
 
@@ -22,6 +23,7 @@ type nextNService struct {
 	logger         log.Logger
 }
 
+// NewNextNService creates a new service that will return the next N (default:5) races
 func NewNextNService(repository repository.RaceRepository, logger log.Logger) service.Service {
 	return &nextNService{
 		RaceRepository: repository,

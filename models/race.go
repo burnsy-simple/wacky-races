@@ -59,14 +59,17 @@ func newRace(id, meetID string, category RaceCategory, name string, start, close
 	}
 }
 
+// NewThoroughbredRace creates a thoroughbred/horse race
 func NewThoroughbredRace(id, meetID string, name string, start, close time.Time) *Race {
 	return newRace(id, meetID, Thoroughbred, name, start, close)
 }
 
+// NewGreyhoundRace creates a greyhound race
 func NewGreyhoundRace(id, meetID string, name string, start, close time.Time) *Race {
 	return newRace(id, meetID, Greyhound, name, start, close)
 }
 
+// NewHarnessRace creates a harness race
 func NewHarnessRace(id, meetID string, name string, start, close time.Time) *Race {
 	return newRace(id, meetID, Harness, name, start, close)
 }
