@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/burnsy/wacky-races/raceservice"
+	"github.com/burnsy/wacky-races/service"
 	consulapi "github.com/hashicorp/consul/api"
 
 	"github.com/go-kit/kit/endpoint"
@@ -19,7 +20,7 @@ import (
 // New returns a service that's load-balanced over instances of raceservice found
 // in the provided Consul server. The mechanism of looking up raceservice
 // instances in Consul is hard-coded into the client.
-func New(consulAddr string, logger log.Logger) (raceservice.Service, error) {
+func New(consulAddr string, logger log.Logger) (service.Service, error) {
 	apiclient, err := consulapi.NewClient(&consulapi.Config{
 		Address: consulAddr,
 	})
@@ -60,7 +61,7 @@ func New(consulAddr string, logger log.Logger) (raceservice.Service, error) {
 	return endpoints, nil
 }
 
-func factoryFor(makeEndpoint func(raceservice.Service) endpoint.Endpoint) sd.Factory {
+func factoryFor(makeEndpoint func(service.Service) endpoint.Endpoint) sd.Factory {
 	return func(instance string) (endpoint.Endpoint, io.Closer, error) {
 		service, err := raceservice.MakeClientEndpoints(instance)
 		if err != nil {
