@@ -11,7 +11,7 @@ i.e. Thoroughbreds do not compete in Harness races
 
 ## API
 GET /races?num_races=3         retrieve next N races; 5 by default  
-GET /race/:id                  itretrieve a particular race
+GET /race/:id                  retrieve a particular race
 
 ## Instructions
 cd wacky-races  
