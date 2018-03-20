@@ -2,6 +2,7 @@ package raceservice
 
 import (
 	"context"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -11,6 +12,7 @@ import (
 
 	"github.com/burnsy/wacky-races/common"
 	"github.com/burnsy/wacky-races/middleware"
+	"github.com/burnsy/wacky-races/payloads"
 	"github.com/burnsy/wacky-races/repository"
 	"github.com/burnsy/wacky-races/service"
 	"github.com/go-kit/kit/log"
@@ -36,6 +38,16 @@ func TestGetNextRaces(t *testing.T) {
 
 	if len(body) <= 2 {
 		t.Errorf("Expected non-empty content; got %s", string(body))
+	}
+
+	var payload payloads.RacesResp
+	err := json.Unmarshal(body, &payload)
+	if err != nil {
+		t.Fatalf("Expected races; got error %v; body = %v", err, string(body))
+	}
+
+	if len(payload.Races) != defaultNumRaces {
+		t.Errorf("Expected 5 races; got %d", len(payload.Races))
 	}
 }
 
