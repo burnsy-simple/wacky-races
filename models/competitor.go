@@ -17,9 +17,12 @@ type RaceCategory int8
 // swagger:model competitor
 type Competitor struct {
 	// required: true
-	ID       string       `json:"id"`
-	Name     string       `json:"name,omitempty"`
-	Position int8         `json:"position"`
+	ID string `json:"id"`
+	// required: true
+	Name string `json:"name,omitempty"`
+	// required: true
+	Position int8 `json:"position"`
+	// required: true
 	Category RaceCategory `json:"type"` // type is the domain term?
 }
 

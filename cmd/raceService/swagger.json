@@ -181,7 +181,7 @@
     "raceDetailsResponse": {
       "description": "RaceDetailsResp represents a single race of any type.",
       "schema": {
-        "$ref": "#/definitions/RaceCategory"
+        "$ref": "#/definitions/race"
       },
       "headers": {
         "Competitors": {
@@ -191,31 +191,7 @@
           },
           "description": "required: true"
         },
-        "close_at": {
-          "type": "string",
-          "format": "date-time",
-          "description": "required: true"
-        },
-        "id": {
-          "type": "string",
-          "description": "required: true"
-        },
-        "meet_id": {
-          "type": "string",
-          "description": "required: true"
-        },
-        "name": {
-          "type": "string",
-          "description": "required: true"
-        },
-        "start_at": {
-          "type": "string",
-          "format": "date-time",
-          "description": "required: true"
-        },
-        "type": {
-          "description": "required: true"
-        }
+        "Race": {}
       }
     },
     "racesResponse": {

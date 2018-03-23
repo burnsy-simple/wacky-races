@@ -158,5 +158,5 @@ func addCompetitors(raceDetails *models.RaceDetails, competitors []*models.Compe
 		raceDetails.Competitors = append(raceDetails.Competitors, competitor)
 		*index = (*index + 1) % len(competitors)
 	}
-	racesByID[raceDetails.ID] = raceDetails
+	racesByID[raceDetails.Race.ID] = raceDetails
 }

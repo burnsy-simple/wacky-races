@@ -13,7 +13,7 @@ import "github.com/burnsy/wacky-races/models"
 // swagger:parameters listRaces
 type RacesReq struct {
 	// in: path
-	NumRaces int
+	NumRaces int `json:"num_races"`
 }
 
 // RacesResp represents a single race of any type.
@@ -21,9 +21,11 @@ type RacesReq struct {
 // swagger:response racesResponse
 type RacesResp struct {
 	// in: body
+	// required: true
 	Races models.Races `json:"races"`
 
 	// in: body
+	// required: true
 	Err error `json:"err"`
 }
 
@@ -33,15 +35,15 @@ func (r RacesResp) error() error { return r.Err }
 // swagger:parameters getRaceDetails
 type RaceDetailsReq struct {
 	// in: path
-	RaceID string
+	RaceID string `json:"id"`
 }
 
 // RaceDetailsResp represents a single race of any type.
 // swagger:response raceDetailsResponse
 type RaceDetailsResp struct {
-	// in: body
 	// swagger:allOf
 	// required: true
+	// in: body
 	*models.RaceDetails `json:"race_details"`
 
 	// in: body

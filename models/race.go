@@ -44,8 +44,9 @@ func (races Races) Less(i, j int) bool {
 type RaceDetails struct {
 	// swagger:allOf
 	// required: true
-	*Race
-	// Additional race specific details can go here
+	Race *Race
+
+	// required: true
 	Competitors []Competitor
 }
 

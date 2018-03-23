@@ -51,16 +51,16 @@ func MakeClientEndpoints(instance string) (Endpoints, error) {
 
 // GetNextRaces retrieves the next N races that will be run
 func (e Endpoints) GetNextRaces(ctx context.Context, numRaces int) (models.Races, error) {
-	// swagger:route GET /races Races listRaces
+	// swagger:route GET /races/{num_races} Races listRaces
 	//
 	// Gets the next N races.
 	//
 	// Gets the next 5 races by default.
 	//
 	//   Responses:
-	//     default: genericError
+	//     default: racesResponse
 	//     200: racesResponse
-	//     422: validationError
+	//     422: racesResponse
 	request := payloads.RacesReq{NumRaces: numRaces}
 	response, err := e.GetRacesEndpoint(ctx, request)
 	if err != nil {
@@ -72,7 +72,7 @@ func (e Endpoints) GetNextRaces(ctx context.Context, numRaces int) (models.Races
 
 // GetRaceDetails retrieves all the details the user needs to see for a given race
 func (e Endpoints) GetRaceDetails(ctx context.Context, raceID string) (*models.RaceDetails, error) {
-	// swagger:route GET /race/{id} Race getRace
+	// swagger:route GET /race/{id} Race getRaceDetails
 	//
 	// Gets the race details
 	//
