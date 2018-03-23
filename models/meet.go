@@ -1,7 +1,7 @@
 package models
 
 // Meet describes a race meeting
-// swagger:model
+// swagger:model meet
 type Meet struct {
 	// required: true
 	ID       string       `json:"id"`

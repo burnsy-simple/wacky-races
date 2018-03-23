@@ -14,7 +14,7 @@ type RaceCategory int8
 // Competitor competes in a race
 // ID should be unique within the race (at a minimum).
 // Assumption: A competitor only competes in one type/category of race
-// swagger:model
+// swagger:model competitor
 type Competitor struct {
 	// required: true
 	ID       string       `json:"id"`

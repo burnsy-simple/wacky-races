@@ -21,8 +21,10 @@ type RacesReq struct {
 // swagger:response racesResponse
 type RacesResp struct {
 	// in: body
-	models.Races `json:"races"`
-	Err          error `json:"err"`
+	Races models.Races `json:"races"`
+
+	// in: body
+	Err error `json:"err"`
 }
 
 func (r RacesResp) error() error { return r.Err }
@@ -30,14 +32,21 @@ func (r RacesResp) error() error { return r.Err }
 // RaceDetailsReq ...
 // swagger:parameters getRaceDetails
 type RaceDetailsReq struct {
+	// in: path
 	RaceID string
 }
 
 // RaceDetailsResp represents a single race of any type.
-// swagger:response raceDetailsResp
+// swagger:response raceDetailsResponse
 type RaceDetailsResp struct {
+	// in: body
+	// swagger:allOf
+	// required: true
 	*models.RaceDetails `json:"race_details"`
-	Err                 error `json:"err"`
+
+	// in: body
+	// required: true
+	Err error `json:"err"`
 }
 
 func (r RaceDetailsResp) error() error { return r.Err }

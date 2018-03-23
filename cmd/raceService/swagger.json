@@ -1,25 +1,69 @@
 {
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
   "swagger": "2.0",
-  "info": {},
+  "info": {
+    "description": "the purpose of this application is to display the next few wacky races",
+    "title": "Wacky Races API.",
+    "termsOfService": "there are no TOS at this moment, use at your own risk we take no responsibility",
+    "contact": {
+      "name": "Stephen Burns",
+      "email": "stephen_f_burns@hotmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    },
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
   "paths": {
+    "/race/{id}": {
+      "get": {
+        "description": "Gets the race details",
+        "tags": [
+          "Race"
+        ],
+        "operationId": "getRace",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/raceDetailsResponse"
+          },
+          "422": {
+            "$ref": "#/responses/raceDetailsResponse"
+          },
+          "default": {
+            "$ref": "#/responses/raceDetailsResponse"
+          }
+        }
+      }
+    },
     "/races": {
       "get": {
-        "description": "This will show the next 5 races by default.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "schemes": [
-          "http",
-          "https"
-        ],
+        "description": "Gets the next 5 races by default.",
         "tags": [
-          "races"
+          "Races"
         ],
-        "summary": "Lists the next N races.",
+        "summary": "Gets the next N races.",
         "operationId": "listRaces",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "name": "NumRaces",
+            "in": "path",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/responses/racesResponse"
@@ -31,6 +75,140 @@
             "$ref": "#/responses/genericError"
           }
         }
+      }
+    }
+  },
+  "definitions": {
+    "RaceCategory": {
+      "description": "RaceCategory is the type of race - see above enum/const",
+      "type": "integer",
+      "format": "int8",
+      "x-go-package": "github.com/burnsy/wacky-races/models"
+    },
+    "competitor": {
+      "description": "Competitor competes in a race\nID should be unique within the race (at a minimum).\nAssumption: A competitor only competes in one type/category of race",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "position": {
+          "type": "integer",
+          "format": "int8",
+          "x-go-name": "Position"
+        },
+        "type": {
+          "$ref": "#/definitions/RaceCategory"
+        }
+      },
+      "x-go-name": "Competitor",
+      "x-go-package": "github.com/burnsy/wacky-races/models"
+    },
+    "race": {
+      "description": "ID should be globally unique.",
+      "type": "object",
+      "title": "Race represents a single race of any type.",
+      "required": [
+        "id",
+        "meet_id",
+        "type",
+        "name",
+        "start_at",
+        "close_at"
+      ],
+      "properties": {
+        "close_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "CloseAt"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "meet_id": {
+          "type": "string",
+          "x-go-name": "MeetID"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "StartAt"
+        },
+        "type": {
+          "$ref": "#/definitions/RaceCategory"
+        }
+      },
+      "x-go-name": "Race",
+      "x-go-package": "github.com/burnsy/wacky-races/models"
+    },
+    "races": {
+      "description": "Races dscribes a bunch of races",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/race"
+      },
+      "x-go-name": "Races",
+      "x-go-package": "github.com/burnsy/wacky-races/models"
+    }
+  },
+  "responses": {
+    "raceDetailsResponse": {
+      "description": "RaceDetailsResp represents a single race of any type.",
+      "schema": {
+        "$ref": "#/definitions/RaceCategory"
+      },
+      "headers": {
+        "Competitors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/competitor"
+          },
+          "description": "Additional race specific details can go here"
+        },
+        "close_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "required: true"
+        },
+        "id": {
+          "type": "string",
+          "description": "required: true"
+        },
+        "meet_id": {
+          "type": "string",
+          "description": "required: true"
+        },
+        "name": {
+          "type": "string",
+          "description": "required: true"
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "required: true"
+        },
+        "type": {
+          "description": "required: true"
+        }
+      }
+    },
+    "racesResponse": {
+      "description": "RacesResp represents a single race of any type.\nID should be globally unique.",
+      "schema": {
+        "$ref": "#/definitions/races"
       }
     }
   }

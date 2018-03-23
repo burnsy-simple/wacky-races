@@ -8,7 +8,7 @@ import (
 
 // Race represents a single race of any type.
 // ID should be globally unique.
-// swagger:model
+// swagger:model race
 type Race struct {
 	// required: true
 	ID string `json:"id"`
@@ -25,7 +25,7 @@ type Race struct {
 }
 
 // Races dscribes a bunch of races
-// swagger:model
+// swagger:model races
 type Races []Race
 
 // Implementation of sort.Interface
@@ -40,8 +40,9 @@ func (races Races) Less(i, j int) bool {
 }
 
 // RaceDetails represents a single race of any type.
-// swagger:model
+// swagger:model raceDetails
 type RaceDetails struct {
+	// swagger:allOf
 	// required: true
 	*Race
 	// Additional race specific details can go here

@@ -19,3 +19,15 @@ func TestGetRaces(t *testing.T) {
 		t.Errorf("expected 3 races; got %d", len(races))
 	}
 }
+
+func BenchmarkGetRaces(b *testing.B) {
+	logger := log.NewLogfmtLogger(os.Stderr)
+	repo := NewRaceRepository(logger)
+
+	for i := 0; i < b.N; i++ {
+		races, _ := repo.GetNextNRaces(nil, 5)
+		if len(races) != 5 {
+			b.Logf("expected 5 races; got %d", len(races))
+		}
+	}
+}

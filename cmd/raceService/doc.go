@@ -1,6 +1,4 @@
-package main
-
-// Package classification Wacky Races API.
+// Package main Wacky Races API.
 //
 // the purpose of this application is to display the next few wacky races
 //
@@ -8,19 +6,20 @@ package main
 //
 // there are no TOS at this moment, use at your own risk we take no responsibility
 //
-//     Schemes: http, https
-//     Host: localhost
-//     BasePath: /
-//     Version: 0.1.0
-//     License: MIT http://opensource.org/licenses/MIT
-//     Contact: Stephen Burns<stephen_f_burns@hotmail.com>
+//   Schemes: http, https
+//   Host: localhost:8080
+//   BasePath: /
+//   Version: 1.0.0
+//   License: MIT http://opensource.org/licenses/MIT
+//   Contact: Stephen Burns<stephen_f_burns@hotmail.com>
 //
-//     Consumes:
-//     - application/json
+//   Consumes:
+//   - application/json
 //
-//     Produces:
-//     - application/json
+//   Produces:
+//   - application/json
 //
 // swagger:meta
+package main
 
 //go:generate swagger generate spec -o swagger.json
