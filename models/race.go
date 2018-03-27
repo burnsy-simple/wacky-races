@@ -42,7 +42,6 @@ func (races Races) Less(i, j int) bool {
 // RaceDetails represents a single race of any type.
 // swagger:model raceDetails
 type RaceDetails struct {
-	// swagger:allOf
 	// required: true
 	Race *Race
 

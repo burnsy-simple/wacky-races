@@ -1,0 +1,14 @@
+@startuml wacky-races
+[UI] #limegreen
+[Service]
+Repository .. [Service]
+[UI] -left-> [Service]: GET /races/{num_races}
+[Service] .. () "GRPC": Use
+note left of GRPC: consumes feeds
+Database Mongo
+Repository - Mongo: Use
+[Ops Monitor] -> [Service]: GET /healthz
+[Ops Monitor] -> [Service]: GET /readiness
+newpage
+[UI] -> [Service]: GET /race/{race_id}
+@enduml

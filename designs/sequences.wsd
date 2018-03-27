@@ -1,0 +1,20 @@
+@startuml wacky-races
+actor User
+autonumber
+User -> UI: Login
+UI -> Service: GET /races/{num_races}
+database Mongo #gold
+Service ->> Mongo: Get summary
+UI <[#blue]- Service: Summary of races
+note right #lightgreen
+ Summary includes ids,
+ names and times
+end note
+UI -> UI: Display races
+||45||
+...user ponders...
+User -> UI: View race
+UI -> Service: GET /race/{race_id}
+Service ->> Mongo: Get one
+UI <[#blue]- Service: Race details
+@enduml
