@@ -15,8 +15,14 @@ import (
 	"github.com/burnsy/wacky-races/raceservice"
 	"github.com/burnsy/wacky-races/repository"
 	"github.com/burnsy/wacky-races/service"
-	"github.com/go-kit/kit/log"
+	log "github.com/sirupsen/logrus"
 )
+
+func init() {
+	log.SetFormatter(&log.JSONFormatter{})
+	log.SetOutput(os.Stdout)
+	log.SetLevel(log.DebugLevel)
+}
 
 func main() {
 	var (
@@ -24,33 +30,26 @@ func main() {
 	)
 	flag.Parse()
 
-	var logger log.Logger
-	{
-		logger = log.NewLogfmtLogger(os.Stderr)
-		logger = log.With(logger, "ts", log.DefaultTimestampUTC)
-		logger = log.With(logger, "caller", log.DefaultCaller)
-	}
-
 	var repo repository.RaceRepository
 	{
-		repo = repository.NewRaceRepository(log.With(logger, "component", common.RepositoryKey))
+		repo = repository.NewRaceRepository(log.StandardLogger())
 	}
 
 	var svc service.Service
 	{
-		svc = raceservice.NewNextNService(repo, logger)
-		svc = middleware.LoggingMiddleware(logger)(svc)
+		svc = raceservice.NewNextNService(repo, log.StandardLogger())
+		svc = middleware.LoggingMiddleware(log.StandardLogger())(svc)
 	}
 
 	var ctx context.Context
 	{
 		ctx = context.Background()
-		ctx = context.WithValue(ctx, common.LoggerKey, log.With(logger, "component", common.LoggerKey))
+		ctx = context.WithValue(ctx, common.LoggerKey, log.StandardLogger())
 	}
 
 	var h http.Handler
 	{
-		h = raceservice.MakeHTTPHandler(ctx, svc, log.With(logger, "component", "HTTP"))
+		h = raceservice.MakeHTTPHandler(ctx, svc, log.StandardLogger())
 	}
 
 	errs := make(chan error)
@@ -61,9 +60,12 @@ func main() {
 	}()
 
 	go func() {
-		logger.Log("transport", "HTTP", "addr", *httpAddr)
+		log.WithFields(log.Fields{
+			"transport": "HTTP",
+			"addr":      *httpAddr,
+		}).Info("Starting service")
 		errs <- http.ListenAndServe(*httpAddr, h)
 	}()
 
-	logger.Log("exit", <-errs)
+	log.Fatal("exit", <-errs)
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/burnsy/wacky-races/models"
-	"github.com/go-kit/kit/log"
+	log "github.com/sirupsen/logrus"
 )
 
 // RaceRepository is our database abstraction
@@ -19,11 +19,11 @@ type RaceRepository interface {
 // We won't really call a Mongo DB for now but we could...
 type mongoRepository struct {
 	RaceRepository
-	Logger log.Logger
+	Logger *log.Logger
 }
 
 // NewRaceRepository creates a new repository
-func NewRaceRepository(logger log.Logger) RaceRepository {
+func NewRaceRepository(logger *log.Logger) RaceRepository {
 	return &mongoRepository{
 		Logger: logger,
 	}

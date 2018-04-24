@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"strings"
 	"testing"
 
@@ -15,7 +14,7 @@ import (
 	"github.com/burnsy/wacky-races/payloads"
 	"github.com/burnsy/wacky-races/repository"
 	"github.com/burnsy/wacky-races/service"
-	"github.com/go-kit/kit/log"
+	log "github.com/sirupsen/logrus"
 )
 
 func TestGetNextRaces(t *testing.T) {
@@ -52,33 +51,26 @@ func TestGetNextRaces(t *testing.T) {
 }
 
 func createHandler() http.Handler {
-	var logger log.Logger
-	{
-		logger = log.NewLogfmtLogger(os.Stderr)
-		logger = log.With(logger, "ts", log.DefaultTimestampUTC)
-		logger = log.With(logger, "caller", log.DefaultCaller)
-	}
-
 	var repo repository.RaceRepository
 	{
-		repo = repository.NewRaceRepository(log.With(logger, "component", common.RepositoryKey))
+		repo = repository.NewRaceRepository(log.StandardLogger())
 	}
 
 	var svc service.Service
 	{
-		svc = NewNextNService(repo, logger)
-		svc = middleware.LoggingMiddleware(logger)(svc)
+		svc = NewNextNService(repo, log.StandardLogger())
+		svc = middleware.LoggingMiddleware(log.StandardLogger())(svc)
 	}
 
 	var ctx context.Context
 	{
 		ctx = context.Background()
-		ctx = context.WithValue(ctx, common.LoggerKey, log.With(logger, "component", common.LoggerKey))
+		ctx = context.WithValue(ctx, common.LoggerKey, log.StandardLogger())
 	}
 
 	var h http.Handler
 	{
-		h = MakeHTTPHandler(ctx, svc, log.With(logger, "component", "HTTP"))
+		h = MakeHTTPHandler(ctx, svc, log.StandardLogger())
 	}
 
 	return h

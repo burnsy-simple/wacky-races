@@ -7,7 +7,7 @@ import (
 	"github.com/burnsy/wacky-races/models"
 	"github.com/burnsy/wacky-races/repository"
 	"github.com/burnsy/wacky-races/service"
-	"github.com/go-kit/kit/log"
+	log "github.com/sirupsen/logrus"
 )
 
 const defaultNumRaces = 5
@@ -19,11 +19,11 @@ var (
 
 type nextNService struct {
 	RaceRepository repository.RaceRepository
-	logger         log.Logger
+	logger         *log.Logger
 }
 
 // NewNextNService creates a new service that will return the next N (default:5) races
-func NewNextNService(repository repository.RaceRepository, logger log.Logger) service.Service {
+func NewNextNService(repository repository.RaceRepository, logger *log.Logger) service.Service {
 	return &nextNService{
 		RaceRepository: repository,
 		logger:         logger,

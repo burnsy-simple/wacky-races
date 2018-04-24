@@ -1,14 +1,13 @@
 package repository
 
 import (
-	"os"
 	"testing"
 
-	"github.com/go-kit/kit/log"
+	log "github.com/sirupsen/logrus"
 )
 
 func TestGetRaces(t *testing.T) {
-	logger := log.NewLogfmtLogger(os.Stderr)
+	logger := log.StandardLogger()
 	repo := NewRaceRepository(logger)
 
 	races, err := repo.GetNextNRaces(nil, 3)
@@ -21,7 +20,7 @@ func TestGetRaces(t *testing.T) {
 }
 
 func BenchmarkGetRaces(b *testing.B) {
-	logger := log.NewLogfmtLogger(os.Stderr)
+	logger := log.StandardLogger()
 	repo := NewRaceRepository(logger)
 
 	for i := 0; i < b.N; i++ {

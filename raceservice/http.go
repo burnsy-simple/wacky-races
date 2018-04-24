@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 
 	"context"
@@ -17,8 +18,9 @@ import (
 	"github.com/burnsy/wacky-races/service"
 	"github.com/gorilla/mux"
 
-	"github.com/go-kit/kit/log"
+	kitlog "github.com/go-kit/kit/log"
 	httptransport "github.com/go-kit/kit/transport/http"
+	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -28,11 +30,11 @@ var (
 )
 
 // MakeHTTPHandler mounts all of the service endpoints into an http.Handler.
-func MakeHTTPHandler(ctx context.Context, svc service.Service, logger log.Logger) http.Handler {
+func MakeHTTPHandler(ctx context.Context, svc service.Service, logger *log.Logger) http.Handler {
 	r := mux.NewRouter()
 	e := MakeServerEndpoints(svc)
 	options := []httptransport.ServerOption{
-		httptransport.ServerErrorLogger(logger),
+		httptransport.ServerErrorLogger(kitlog.NewLogfmtLogger(os.Stdout)),
 		httptransport.ServerErrorEncoder(encodeError),
 	}
 

@@ -4,9 +4,9 @@ package models
 
 import (
 	"fmt"
-	"log"
 	"time"
 
+	log "github.com/sirupsen/logrus"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
@@ -66,7 +66,7 @@ func newRace(id, meetID string, category RaceCategory, name string, start, close
 	}
 	err := validate.Struct(race)
 	if err != nil {
-		log.Printf("got err: %v", err)
+		log.Infof("got err: %v", err)
 		for _, err := range err.(validator.ValidationErrors) {
 
 			fmt.Println(err.Namespace())
