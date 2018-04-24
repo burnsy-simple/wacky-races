@@ -3,7 +3,11 @@
 package models
 
 import (
+	"fmt"
+	"log"
 	"time"
+
+	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // Race represents a single race of any type.
@@ -11,17 +15,17 @@ import (
 // swagger:model race
 type Race struct {
 	// required: true
-	ID string `json:"id"`
+	ID string `json:"id" validate:"required"`
 	// required: true
-	MeetID string `json:"meet_id"`
+	MeetID string `json:"meet_id" validate:"required"`
 	// required: true
-	Category RaceCategory `json:"type"`
+	Category RaceCategory `json:"type" validate:"gte=0,lte=2"`
 	// required: true
-	Name string `json:"name"`
+	Name string `json:"name" validate:"required"`
 	// required: true
-	StartAt time.Time `json:"start_at"`
+	StartAt time.Time `json:"start_at" validate:"required"`
 	// required: true
-	CloseAt time.Time `json:"close_at"`
+	CloseAt time.Time `json:"close_at" validate:"required"`
 }
 
 // Races dscribes a bunch of races
@@ -50,7 +54,9 @@ type RaceDetails struct {
 }
 
 func newRace(id, meetID string, category RaceCategory, name string, start, close time.Time) *Race {
-	return &Race{
+	validate := validator.New()
+
+	race := &Race{
 		ID:       id,
 		MeetID:   meetID,
 		Category: category,
@@ -58,6 +64,26 @@ func newRace(id, meetID string, category RaceCategory, name string, start, close
 		StartAt:  start,
 		CloseAt:  close,
 	}
+	err := validate.Struct(race)
+	if err != nil {
+		log.Printf("got err: %v", err)
+		for _, err := range err.(validator.ValidationErrors) {
+
+			fmt.Println(err.Namespace())
+			fmt.Println(err.Field())
+			fmt.Println(err.StructNamespace()) // can differ when a custom TagNameFunc is registered or
+			fmt.Println(err.StructField())     // by passing alt name to ReportError like below
+			fmt.Println(err.Tag())
+			fmt.Println(err.ActualTag())
+			fmt.Println(err.Kind())
+			fmt.Println(err.Type())
+			fmt.Println(err.Value())
+			fmt.Println(err.Param())
+			fmt.Println()
+		}
+	}
+
+	return race
 }
 
 // NewThoroughbredRace creates a thoroughbred/horse race

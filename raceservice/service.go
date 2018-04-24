@@ -4,11 +4,10 @@ import (
 	"context"
 	"errors"
 
+	"github.com/burnsy/wacky-races/models"
 	"github.com/burnsy/wacky-races/repository"
 	"github.com/burnsy/wacky-races/service"
 	"github.com/go-kit/kit/log"
-
-	"github.com/burnsy/wacky-races/models"
 )
 
 const defaultNumRaces = 5

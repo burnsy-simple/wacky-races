@@ -1,6 +1,6 @@
 @startuml
 (*) -> idle
-idle -> gotRaces : getRaces
+idle -> gotRaces : evRaces
 gotRaces -> viewingRace: evRaceDetails
 viewingRace -> idle
 @enduml

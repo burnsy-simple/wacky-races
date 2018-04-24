@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"context"
+
 	"github.com/burnsy/wacky-races/common"
 	"github.com/burnsy/wacky-races/models"
 )

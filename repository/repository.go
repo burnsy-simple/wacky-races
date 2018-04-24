@@ -1,10 +1,10 @@
 package repository
 
 import (
-	"github.com/go-kit/kit/log"
-
 	"context"
+
 	"github.com/burnsy/wacky-races/models"
+	"github.com/go-kit/kit/log"
 )
 
 // RaceRepository is our database abstraction
